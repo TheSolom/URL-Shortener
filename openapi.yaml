@@ -1,0 +1,167 @@
+openapi: 3.1.0
+x-stoplight:
+    id: t6jxp4o0drv36
+info:
+    title: URL Shortener
+    version: '1.0'
+    summary: URL Shortener API Specification
+servers:
+    - url: 'http://localhost:8000'
+paths:
+    api/url:
+        post:
+            summary: Create a short URL
+            operationId: post-url
+            responses:
+                '200':
+                    description: The provided URL has already been shortened. Return the existing short URL without creating a new one
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/short-url'
+                            examples:
+                                Example 1:
+                                    value:
+                                        id: dyAS3
+                                        originalURL: 'https://someverylongurlhere.io'
+                                        visitCount: 142
+                '201':
+                    description: A new short URL has been created
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/short-url'
+                            examples:
+                                Example 1:
+                                    value:
+                                        id: dyAS3
+                                        originalURL: 'https://someverylongurlhere.io'
+                                        visitCount: 142
+                '400':
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                description: A message describing what is wrong with the request and how to solve it
+                                        required:
+                                            - message
+                            examples:
+                                Example 1:
+                                    value:
+                                        error:
+                                            message: This URL is already a short URL. Please use an unshortened URL.
+            description: Receive a URL and generate a short URL
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                url:
+                                    format: uri
+                                    type: string
+                                    description: The URL which the short URL should point to
+                            required:
+                                - url
+                        examples:
+                            Example 1:
+                                value:
+                                    url: 'https://someverylongurlhere.io'
+                description: ''
+        parameters: []
+    'api/url/{id}':
+        parameters:
+            - schema:
+                  type: string
+                  example: dyAS3
+              name: id
+              in: path
+              description: Short URL ID
+              required: true
+        get:
+            summary: Get short URL
+            tags: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/short-url'
+                            examples:
+                                Example 1:
+                                    value:
+                                        id: dyAS3
+                                        originalURL: 'https://someverylongurlhere.io'
+                                        visitCount: 142
+                '404':
+                    description: Not Found
+            operationId: get-url-id
+            description: Retrieve a short URL (without incrementing the visit count)
+    'api/url/{id}/visit':
+        parameters:
+            - schema:
+                  type: string
+                  example: dyAS3
+              name: id
+              in: path
+              required: true
+              description: Short URL ID
+        post:
+            summary: Visit URL
+            operationId: post-id
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/short-url'
+                            examples:
+                                Example 1:
+                                    value:
+                                        id: dyAS3
+                                        originalURL: 'https://someverylongurlhere.io'
+                                        visitCount: 143
+                        application/xml:
+                            schema:
+                                $ref: '#/components/schemas/short-url'
+                            examples: {}
+                '404':
+                    description: Not Found
+            description: Retrieve short URL for the purpose of redirecting user to original URL. Should increment visit count by 1
+components:
+    schemas:
+        short-url:
+            type: object
+            title: Short URL
+            examples:
+                - id: dyAS3
+                  originalURL: 'https://someverylongurlhere.io'
+                  visitCount: 142
+            x-stoplight:
+                id: 1a46ffbbef8d5
+            properties:
+                id:
+                    type: string
+                    description: An identifier for the Short URL. The ID is used in the url
+                originalURL:
+                    type: string
+                    format: uri
+                    description: The original URL the user is redirected to
+                visitCount:
+                    type: number
+                    default: 0
+                    description: Number of times the URL has been visited
+            required:
+                - id
+                - originalURL
+                - visitCount
+x-internal: true

@@ -1,0 +1,30 @@
+{
+    "name": "url-shortener-frontend",
+    "version": "1.0.0",
+    "description": "Frontend for url shortener website",
+    "license": "ISC",
+    "author": "TheSolom",
+    "type": "commonjs",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "client-only": "^0.0.1",
+        "debug": "^4.3.4",
+        "eventemitter3": "^4.0.7",
+        "follow-redirects": "^1.15.2",
+        "has-flag": "^4.0.0",
+        "http-proxy": "^1.18.1",
+        "ms": "^2.1.2",
+        "next": "^13.1.2",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "requires-port": "^1.0.0",
+        "scheduler": "^0.23.0",
+        "styled-jsx": "^5.1.1",
+        "supports-color": "^7.2.0"
+    },
+    "devDependencies": {}
+}
