@@ -2,7 +2,7 @@
 
 A full-stack URL shortening service built with Express.js, MongoDB, and Next.js. This project is part of Maxim Orlov's backend projects collection for developers to practice their skills and build portfolio projects.
 
-[![URL Shortener]](https://github.com/thesolom/URL-Shortener/blob/master/assets/Home-Page.png 'Home Page')
+![URL Shortener](https://github.com/thesolom/URL-Shortener/blob/master/assets/Home-Page.png 'Home Page')
 
 ## 🚀 Features
 
